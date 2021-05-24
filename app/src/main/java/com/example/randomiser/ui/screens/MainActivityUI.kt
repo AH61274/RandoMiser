@@ -12,17 +12,13 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.randomiser.RandoMiserViewModel
-import com.example.randomiser.model.Platform
 import com.example.randomiser.model.Teammate
-import com.example.randomiser.ui.theme.RandoMiserTheme
-import com.example.randomiser.ui.theme.RandoWhite
+import com.example.randomiser.ui.theme.*
 import kotlin.random.Random
 
 @Composable
@@ -35,11 +31,11 @@ fun MemberListItem(teammate: Teammate) {
                 fontFamily = FontFamily.SansSerif,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(12.dp),
+                    .padding(LARGE_DP),
             )
             Divider(
                 color = RandoWhite,
-                thickness = 1.dp
+                thickness = SMALL_DP
             )
         }
     }
@@ -50,6 +46,8 @@ fun TeamList(teammates: List<Teammate>, onClick: () -> Unit) {
     LazyColumn(
         Modifier
             .fillMaxWidth()
+            .padding(LARGE_DP, MED_DP)
+            .clip(Shapes.medium)
             .clickable { onClick() }
     ) {
         items(teammates) { teammate ->
@@ -65,25 +63,25 @@ fun WhosUp(teammate: Teammate) {
             color = color,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(142.dp)
+                .height(MAIN_BOX_HEIGHT)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(12.dp)
+                    .padding(MED_DP)
             ) {
                 Text(
                     text = name,
                     color = accentColor,
                     textAlign = TextAlign.Center,
-                    fontSize = 28.sp,
+                    fontSize = XL_FONT,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
                     text = "You're up for $platform",
                     color = accentColor,
                     textAlign = TextAlign.Center,
-                    fontSize = 20.sp,
+                    fontSize = LARGE_FONT,
                     modifier = Modifier.fillMaxWidth()
                 )
             }
