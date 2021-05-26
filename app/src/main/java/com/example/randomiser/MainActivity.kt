@@ -18,10 +18,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         buildUi()
-
-        viewModel.whosUp.observe(this) {
-            buildUi()
-        }
     }
 
     private fun buildUi() {

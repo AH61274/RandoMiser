@@ -8,6 +8,9 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontFamily
@@ -90,7 +93,8 @@ fun WhosUp(teammate: Teammate) {
 // Main UI ------------------------------------
 @Composable
 fun MainActivityUI(viewModel: RandoMiserViewModel) {
-    BuildUI(teammates = viewModel.teammates, viewModel.whosUp.value ?: return, viewModel::nextUp)
+    val next by viewModel.whosUp.observeAsState()
+    BuildUI(teammates = viewModel.teammates, next ?: return, viewModel::nextUp)
 }
 
 @Composable
