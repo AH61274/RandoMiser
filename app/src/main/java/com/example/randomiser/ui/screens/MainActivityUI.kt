@@ -1,5 +1,6 @@
 package com.example.randomiser.ui.screens
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -49,6 +50,7 @@ fun TeamList(teammates: List<Teammate>, onClick: () -> Unit) {
             .padding(LARGE_DP, MED_DP)
             .clip(Shapes.medium)
             .clickable { onClick() }
+            .animateContentSize()
     ) {
         items(teammates) { teammate ->
             MemberListItem(teammate)

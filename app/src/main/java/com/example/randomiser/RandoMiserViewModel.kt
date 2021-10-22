@@ -16,7 +16,7 @@ class RandoMiserViewModel @Inject constructor() : ViewModel() {
     val teammates = Teammate.makeList()
     var isDone = false
 
-    private val _whosUp: MutableLiveData<Teammate> = MutableLiveData(teammates[Random.nextInt(0, teammates.size)])
+    private val _whosUp: MutableLiveData<Teammate> = MutableLiveData(teammates.random())
     val whosUp: LiveData<Teammate> = _whosUp
 
     init {

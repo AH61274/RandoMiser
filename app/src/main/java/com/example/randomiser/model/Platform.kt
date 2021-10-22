@@ -6,5 +6,6 @@ enum class Platform {
     Android,
     ALayer,
     Design,
-    Teamliness
+    SDET,
+    Teamliness,
 }
