@@ -19,14 +19,14 @@ data class Teammate(
                 Teammate("Sarah Rehmer", Color(0xFF99cccc), Platform.SDET),
                 Teammate("Jude Blinder", Color(0xFFFF3CFF), Platform.Web),
                 Teammate("Chao Peng", Color(0xFF04136B), Platform.iOS),
-                Teammate("Andrew Hughes", Color(0xFF2FEE0D), Platform.Android),
+                Teammate("Andrew Hughes", Color(0xFF0DEED4), Platform.Android),
                 Teammate("Claire Giovanoni", Color(0xFFFFA0E5), Platform.Design),
                 Teammate("Matt Smith", Color(0xFF1D9367), Platform.SDET),
                 Teammate("Aditya Jawade", Color(0xFFDEE7F7), Platform.ALayer),
+                Teammate("Vamshee Sangani", Color(0xF72BD534), Platform.SDET),
                 Teammate("Shawn Han", Color(0xFFCF4201), Platform.iOS),
                 Teammate("John Bolger", Color(0xFF888686), Platform.ALayer),
                 Teammate("Ethan Berg", Color(0xFF0974E6), Platform.Android),
-                Teammate("Vamshee Sangani", Color(0xABFF0000), Platform.SDET),
                 Teammate("Yuval Allweil", Color(0xFFF4C2C2), Platform.Web),
             )
     }

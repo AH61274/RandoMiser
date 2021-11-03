@@ -13,39 +13,48 @@ import kotlin.random.Random
 @HiltViewModel
 class RandoMiserViewModel @Inject constructor() : ViewModel() {
 
-    val teammates = Teammate.makeList()
+    private val _teammates: MutableLiveData<MutableList<Teammate>> = MutableLiveData(Teammate.makeList())
+    val teammates: LiveData<MutableList<Teammate>> = _teammates
     var isDone = false
 
-    private val _whosUp: MutableLiveData<Teammate> = MutableLiveData(teammates.random())
+    private val _whosUp: MutableLiveData<Teammate> = MutableLiveData(_teammates.value?.random())
     val whosUp: LiveData<Teammate> = _whosUp
 
     init {
-        teammates.remove(_whosUp.value)
+        _teammates.value?.remove(_whosUp.value)
     }
 
     fun nextUp() {
         if (isDone) {
-            teammates.addAll(
+            _teammates.value?.addAll(
                 0,
                 Teammate.makeList()
             )
             isDone = false
         } else {
-            if (teammates.size > 0) {
-                val next = teammates[Random.nextInt(0, teammates.size)]
-                teammates.remove(next)
-                _whosUp.postValue(next)
-            } else {
-                teammates.clear()
-                _whosUp.postValue(
-                    Teammate(
-                        "Leadership\nProduct\n& Scrum",
-                        Color(0xFF06237A),
-                        Platform.Teamliness
+            _teammates.value?.let { teammates ->
+                if (teammates.size > 0) {
+                    val next = teammates[Random.nextInt(0, teammates.size)]
+                    teammates.remove(next)
+                    _whosUp.postValue(next)
+                } else {
+                    teammates.clear()
+                    _whosUp.postValue(
+                        Teammate(
+                            "Leadership\nProduct\n& Scrum",
+                            Color(0xFF06237A),
+                            Platform.Teamliness
+                        )
                     )
-                )
-                isDone = true
+                    isDone = true
+                }
             }
         }
+    }
+
+    fun onDismiss(teammate: Teammate) {
+        val oldList = _teammates.value
+        val newList = oldList?.partition { it == teammate }?.second
+        _teammates.value = newList?.toMutableList()
     }
 }
