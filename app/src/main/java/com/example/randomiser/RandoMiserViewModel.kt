@@ -20,25 +20,23 @@ class RandoMiserViewModel @Inject constructor() : ViewModel() {
     private val _whosUp: MutableLiveData<Teammate> = MutableLiveData(_teammates.value?.random())
     val whosUp: LiveData<Teammate> = _whosUp
 
+    private val _isUpdating: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isUpdating: LiveData<Boolean> = _isUpdating
+
     init {
         _teammates.value?.remove(_whosUp.value)
     }
 
     fun nextUp() {
         if (isDone) {
-            _teammates.value?.addAll(
-                0,
-                Teammate.makeList()
-            )
-            isDone = false
+            restart()
         } else {
             _teammates.value?.let { teammates ->
                 if (teammates.size > 0) {
                     val next = teammates[Random.nextInt(0, teammates.size)]
-                    teammates.remove(next)
                     _whosUp.postValue(next)
+                    onDismiss(next)
                 } else {
-                    teammates.clear()
                     _whosUp.postValue(
                         Teammate(
                             "Leadership\nProduct\n& Scrum",
@@ -52,9 +50,15 @@ class RandoMiserViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    fun restart() {
+        isDone = false
+        _teammates.postValue(Teammate.makeList())
+        nextUp()
+    }
+
     fun onDismiss(teammate: Teammate) {
         val oldList = _teammates.value
-        val newList = oldList?.partition { it == teammate }?.second
+        val newList = oldList?.filter { it != teammate }
         _teammates.value = newList?.toMutableList()
     }
 }

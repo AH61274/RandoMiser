@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import com.example.randomiser.RandoMiserViewModel
 import com.example.randomiser.model.Teammate
 import com.example.randomiser.ui.theme.*
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlin.random.Random
 
 @Composable
@@ -67,7 +69,10 @@ fun TeamList(teammates: List<Teammate>, onDismiss: (Teammate) -> Unit) {
                 it.name
             }) { teammate ->
                 val dismissState = rememberDismissState()
-                if (dismissState.isDismissed(DismissDirection.EndToStart) || dismissState.isDismissed(DismissDirection.StartToEnd)) {
+                if (dismissState.isDismissed(DismissDirection.EndToStart) || dismissState.isDismissed(
+                        DismissDirection.StartToEnd
+                    )
+                ) {
                     onDismiss(teammate)
                 }
                 SwipeToDismiss(
@@ -163,21 +168,29 @@ fun WhosUp(teammate: Teammate, next: () -> Unit) {
 fun MainActivityUI(viewModel: RandoMiserViewModel) {
     val next by viewModel.whosUp.observeAsState()
     val teammates by viewModel.teammates.observeAsState(emptyList())
+    val isUpdating by viewModel.isUpdating.observeAsState(false)
     BuildUI(
         teammates = teammates.toList(),
         whosUp = next ?: return,
+        isUpdating = isUpdating,
+        restart = viewModel::restart,
         onClick = viewModel::nextUp,
-        onDismiss = viewModel::onDismiss
+        onDismiss = viewModel::onDismiss,
     )
 }
 
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
-private fun BuildUI(teammates: List<Teammate>, whosUp: Teammate, onClick: () -> Unit, onDismiss: (Teammate) -> Unit) {
+private fun BuildUI(teammates: List<Teammate>, isUpdating: Boolean, restart: () -> Unit, whosUp: Teammate, onClick: () -> Unit, onDismiss: (Teammate) -> Unit) {
     Column(Modifier.clickable { onClick() }) {
         WhosUp(teammate = whosUp, next = onClick)
-        TeamList(teammates = teammates, onDismiss = onDismiss)
+        SwipeRefresh(
+            state = rememberSwipeRefreshState(isUpdating),
+            onRefresh = { restart() },
+        ) {
+            TeamList(teammates = teammates, onDismiss = onDismiss)
+        }
     }
 }
 
@@ -190,6 +203,8 @@ fun DefaultPreview() {
     RandoMiserTheme {
         BuildUI(
             teammates,
+            false,
+            {},
             teammates[Random.nextInt(0, teammates.size - 1)],
             {},
             {}
