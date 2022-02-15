@@ -10,8 +10,8 @@ plugins {
 }
 
 android {
-    compileSdk = 30
-    buildToolsVersion = "30.0.3"
+    compileSdk = 31
+    buildToolsVersion = "30.0.2"
 
     defaultConfig {
         applicationId = "com.example.randomiser"
@@ -41,7 +41,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
-        useIR = true
     }
     buildFeatures {
         compose = true
@@ -53,17 +52,17 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.3.2")
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("com.google.android.material:material:1.3.0")
+    implementation("androidx.core:core-ktx:1.7.0")
+    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("com.google.android.material:material:1.5.0")
     implementation("androidx.compose.ui:ui:${rootProject.extra["compose_version"]}")
     implementation("androidx.compose.material:material:${rootProject.extra["compose_version"]}")
     implementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")
-    implementation("androidx.compose.runtime:runtime:1.0.0-beta07")
-    implementation("androidx.compose.runtime:runtime-livedata:1.0.0-beta07")
-    implementation("androidx.compose.runtime:runtime-rxjava2:1.0.0-beta07")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
-    implementation("androidx.activity:activity-compose:1.3.0-alpha06")
+    implementation("androidx.compose.runtime:runtime:1.2.0-alpha03")
+    implementation("androidx.compose.runtime:runtime-livedata:1.2.0-alpha03")
+    implementation("androidx.compose.runtime:runtime-rxjava2:1.2.0-alpha03")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
+    implementation("androidx.activity:activity-compose:1.5.0-alpha02")
 
     implementation("com.google.accompanist:accompanist-swiperefresh:0.20.2")
 
