@@ -59,6 +59,6 @@ class RandoMiserViewModel @Inject constructor() : ViewModel() {
     fun onDismiss(teammate: Teammate) {
         val oldList = _teammates.value
         val newList = oldList?.filter { it != teammate }
-        _teammates.value = newList?.toMutableList()
+        _teammates.postValue(newList?.toMutableList())
     }
 }
