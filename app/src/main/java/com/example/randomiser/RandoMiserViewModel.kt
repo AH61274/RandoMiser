@@ -27,11 +27,11 @@ class RandoMiserViewModel @Inject constructor() : ViewModel() {
         _teammates.value?.remove(_whosUp.value)
     }
 
-    fun nextUp() {
+    fun nextUp(team: MutableList<Teammate>?) {
         if (isDone) {
             restart()
         } else {
-            _teammates.value?.let { teammates ->
+            team?.let { teammates ->
                 if (teammates.size > 0) {
                     val next = teammates[Random.nextInt(0, teammates.size)]
                     _whosUp.postValue(next)
@@ -52,8 +52,19 @@ class RandoMiserViewModel @Inject constructor() : ViewModel() {
 
     fun restart() {
         isDone = false
+        _whosUp.postValue(
+            Teammate(
+                "Get Ready",
+                Color(
+                    Random.nextInt(255),
+                    Random.nextInt(255),
+                    Random.nextInt(255)
+                ),
+                Platform.Teamliness
+            )
+        )
         _teammates.postValue(Teammate.makeList())
-        nextUp()
+//        nextUp()
     }
 
     fun onDismiss(teammate: Teammate) {

@@ -16,15 +16,17 @@ data class Teammate(
     companion object {
         fun makeList(): MutableList<Teammate> =
             mutableListOf(
-                Teammate("Sarah Rehmer", Color(0xFF99cccc), Platform.SDET),
+                Teammate("Sarah Rehmer", Color(0xFF99cccc), Platform.Automation),
+                Teammate("Hans Chehaiber", Color(0xFFFFD700), Platform.Automation),
                 Teammate("Jude Blinder", Color(0xFFFF3CFF), Platform.Web),
                 Teammate("Chao Peng", Color(0xFF04136B), Platform.iOS),
                 Teammate("Andrew Hughes", Color(0xFF0DEED4), Platform.Android),
+                Teammate("Matt Smith", Color(0xFF000000), Platform.Automation),
                 Teammate("Stephen Kinney", Color(0xFFFF8D00), Platform.Design),
                 Teammate("Aditya Jawade", Color(0xFFDEE7F7), Platform.ALayer),
-                Teammate("Shawn Han", Color(0xFFCF4201), Platform.iOS),
+                Teammate("Jeswanth Banthu", Color(0xFFCF4201), Platform.iOS),
                 Teammate("Thomas Harlan", Color(0xFF0974E6), Platform.Android),
-                Teammate("Bert Harvey", Color(0xFF4AC380), Platform.SDET),
+                Teammate("Bert Harvey", Color(0xFF4AC380), Platform.Automation),
                 Teammate("Yuval Allweil", Color(0xFFF4C2C2), Platform.Web),
             )
     }

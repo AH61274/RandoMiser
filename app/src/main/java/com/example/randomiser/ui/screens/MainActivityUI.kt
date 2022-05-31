@@ -127,14 +127,14 @@ fun TeamList(teammates: List<Teammate>, onDismiss: (Teammate) -> Unit) {
 }
 
 @Composable
-fun WhosUp(teammate: Teammate, next: () -> Unit) {
+fun WhosUp(teammate: Teammate, teammates: MutableList<Teammate>, next: (MutableList<Teammate>) -> Unit) {
     with(teammate) {
         Surface(
             color = color,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(MAIN_BOX_HEIGHT)
-                .clickable { next() }
+                .clickable { next(teammates) }
         ) {
             Column(
                 verticalArrangement = Arrangement.Center,
@@ -182,9 +182,9 @@ fun MainActivityUI(viewModel: RandoMiserViewModel) {
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
-private fun BuildUI(teammates: List<Teammate>, isUpdating: Boolean, restart: () -> Unit, whosUp: Teammate, onClick: () -> Unit, onDismiss: (Teammate) -> Unit) {
-    Column(Modifier.clickable { onClick() }) {
-        WhosUp(teammate = whosUp, next = onClick)
+private fun BuildUI(teammates: List<Teammate>, isUpdating: Boolean, restart: () -> Unit, whosUp: Teammate, onClick: (MutableList<Teammate>) -> Unit, onDismiss: (Teammate) -> Unit) {
+    Column(Modifier.clickable { onClick(teammates.toMutableList()) }) {
+        WhosUp(teammate = whosUp, teammates = teammates.toMutableList(), next = onClick)
         SwipeRefresh(
             state = rememberSwipeRefreshState(isUpdating),
             onRefresh = { restart() },
