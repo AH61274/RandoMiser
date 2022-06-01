@@ -66,6 +66,9 @@ dependencies {
 
     implementation("com.google.accompanist:accompanist-swiperefresh:0.20.2")
 
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.squareup.moshi:moshi-kotlin:1.13.0")
+
     implementation("com.google.dagger:hilt-android:$hilt_version")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_version")
 
