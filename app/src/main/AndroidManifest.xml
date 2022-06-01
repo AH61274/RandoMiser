@@ -11,7 +11,7 @@
         android:theme="@style/Theme.RandoMiser"
         android:name=".RandoMiserApplication">
         <activity
-            android:name=".MainActivity"
+            android:name=".Hacktivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.RandoMiser.NoActionBar">
