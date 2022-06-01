@@ -1,4 +1,4 @@
-val hilt_version = "2.35"
+val hilt_version = "2.42"
 
 plugins {
 
@@ -11,7 +11,7 @@ plugins {
 
 android {
     compileSdk = 31
-    buildToolsVersion = "30.0.2"
+    buildToolsVersion = "30.0.3"
 
     defaultConfig {
         applicationId = "com.example.randomiser"
@@ -54,15 +54,15 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.7.0")
     implementation("androidx.appcompat:appcompat:1.4.1")
-    implementation("com.google.android.material:material:1.5.0")
+    implementation("com.google.android.material:material:1.6.1")
     implementation("androidx.compose.ui:ui:${rootProject.extra["compose_version"]}")
     implementation("androidx.compose.material:material:${rootProject.extra["compose_version"]}")
     implementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")
-    implementation("androidx.compose.runtime:runtime:1.2.0-alpha03")
-    implementation("androidx.compose.runtime:runtime-livedata:1.2.0-alpha03")
-    implementation("androidx.compose.runtime:runtime-rxjava2:1.2.0-alpha03")
+    implementation("androidx.compose.runtime:runtime:1.2.0-beta02")
+    implementation("androidx.compose.runtime:runtime-livedata:1.2.0-beta02")
+    implementation("androidx.compose.runtime:runtime-rxjava2:1.2.0-beta02")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.1")
-    implementation("androidx.activity:activity-compose:1.5.0-alpha02")
+    implementation("androidx.activity:activity-compose:1.6.0-alpha03")
 
     implementation("com.google.accompanist:accompanist-swiperefresh:0.20.2")
 
