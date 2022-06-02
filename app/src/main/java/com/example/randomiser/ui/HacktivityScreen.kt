@@ -1,9 +1,6 @@
 package com.example.randomiser.ui
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
@@ -32,20 +29,30 @@ fun Layout(viewModel: HacktivityViewModel) {
 fun Animals(cat: LiveData<CatData>, dog: LiveData<DogData>) {
     val catState = cat.observeAsState().value
     val dogState = dog.observeAsState().value
-    Row {
+    Column {
         if (catState != null && dogState != null) {
-            Column {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(16.dp)
+            ) {
                 AsyncImage(
                     model = catState.url,
                     contentDescription = catState.url,
-                    modifier = Modifier.width(200.dp).height(200.dp)
+                    modifier = Modifier.fillMaxSize()
                 )
             }
-            Column {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(16.dp)
+            ) {
                 AsyncImage(
                     model = dogState.url,
                     contentDescription = dogState.url,
-                    modifier = Modifier.width(200.dp).height(200.dp)
+                    modifier = Modifier.fillMaxSize()
                 )
             }
         }

@@ -29,13 +29,12 @@ class HacktivityViewModel @Inject constructor() : ViewModel() {
 
     fun initViewModel() {
         getNames()
-        for (i in 1..10) {
-            getDog()
-            getCat()
-        }
+
+        getDog()
+        getCat()
     }
 
-    fun getCat() {
+    private fun getCat() {
         val request = Request.Builder()
             .url("https://api.thecatapi.com/v1/images/search")
             .build()
@@ -46,7 +45,8 @@ class HacktivityViewModel @Inject constructor() : ViewModel() {
 
             override fun onResponse(call: Call, response: Response) {
                 if (response.isSuccessful) {
-                    val newResponse = response.body?.string()?.removePrefix("[")?.removeSuffix("]") ?: "{}"
+                    val newResponse =
+                        response.body?.string()?.removePrefix("[")?.removeSuffix("]") ?: "{}"
                     val moshi = Moshi.Builder().build()
                     val catAdapter: JsonAdapter<CatData> = moshi.adapter(CatData::class.java)
                     val cat = catAdapter.fromJson(newResponse)
@@ -56,7 +56,7 @@ class HacktivityViewModel @Inject constructor() : ViewModel() {
         })
     }
 
-    fun getDog() {
+    private fun getDog() {
         val request = Request.Builder()
             .url("https://random.dog/woof.json")
             .build()
