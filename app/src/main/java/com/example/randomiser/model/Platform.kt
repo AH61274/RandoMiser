@@ -7,5 +7,6 @@ enum class Platform {
     ALayer,
     Design,
     Automation,
+    Quality,
     Teamliness,
 }

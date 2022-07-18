@@ -21,7 +21,7 @@ data class Teammate(
                 Teammate("Jude Blinder", Color(0xFFFF3CFF), Platform.Web),
                 Teammate("Chao Peng", Color(0xFF04136B), Platform.iOS),
                 Teammate("Andrew Hughes", Color(0xFF0DEED4), Platform.Android),
-                Teammate("Matt Smith", Color(0xFF000000), Platform.Automation),
+                Teammate("Mukti Jaiswal", Color(0xFF673AB7), Platform.Quality),
                 Teammate("Stephen Kinney", Color(0xFFFF8D00), Platform.Design),
                 Teammate("Aditya Jawade", Color(0xFFDEE7F7), Platform.ALayer),
                 Teammate("Jeswanth Banthu", Color(0xFFCF4201), Platform.iOS),
