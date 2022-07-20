@@ -4,9 +4,9 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class CatData(
-    val breeds: List<Any>,
+    val breeds: List<Any>?,
     val id: String,
     val url: String,
-    val width: Int,
-    val height: Int
+    val width: Int?,
+    val height: Int?,
 )

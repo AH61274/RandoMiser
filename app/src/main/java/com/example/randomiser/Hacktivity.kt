@@ -6,9 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewModelScope
 import com.example.randomiser.ui.Layout
 import com.example.randomiser.ui.theme.RandoMiserTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class Hacktivity : ComponentActivity() {
@@ -17,7 +19,9 @@ class Hacktivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.initViewModel()
+        viewModel.viewModelScope.launch {
+            viewModel.initViewModel()
+        }
         setContent {
             App()
         }
