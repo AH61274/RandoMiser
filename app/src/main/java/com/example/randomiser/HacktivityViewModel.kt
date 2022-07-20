@@ -161,16 +161,24 @@ class HacktivityViewModel @Inject constructor() : ViewModel() {
         if (isRoundOver(Round.QUALIFIERS, _roundWinners.value.size)) {
             currentRound = Round.ROUND_1
             _roundWinners.emit(emptyList())
+            contendersFromLast()
         } else if (isRoundOver(Round.ROUND_1, _roundWinners.value.size)) {
             currentRound = Round.ROUND_2
             _roundWinners.emit(emptyList())
+            contendersFromLast()
         } else if (isRoundOver(Round.ROUND_2, _roundWinners.value.size)) {
             currentRound = Round.SEMI_FINALS
             _roundWinners.emit(emptyList())
+            contendersFromLast()
         } else if (isRoundOver(Round.SEMI_FINALS, _roundWinners.value.size)) {
             currentRound = Round.FINAL
             _roundWinners.emit(emptyList())
+            contendersFromLast()
         } else if (isRoundOver(Round.FINAL, _roundWinners.value.size)) {
+            currentRound = Round.QUALIFIERS
+            lastRoundWinners.removeAll { true }
+            _roundWinners.emit(emptyList())
+            getNames()
             // Restart
         } else {
             if (currentRound == Round.QUALIFIERS) {
@@ -178,13 +186,17 @@ class HacktivityViewModel @Inject constructor() : ViewModel() {
             } else if (currentRound == Round.FINAL) {
                 // Something Different
             } else {
-                val contenderA = lastRoundWinners.random()
-                lastRoundWinners.remove(contenderA)
-                val contenderB = lastRoundWinners.random()
-                lastRoundWinners.remove(contenderB)
-                _contenders.emit(Pair(contenderA, contenderB))
+                contendersFromLast()
             }
         }
+    }
+
+    private fun contendersFromLast() = viewModelScope.launch {
+        val contenderA = lastRoundWinners.random()
+        lastRoundWinners.remove(contenderA)
+        val contenderB = lastRoundWinners.random()
+        lastRoundWinners.remove(contenderB)
+        _contenders.emit(Pair(contenderA, contenderB))
     }
 
     private fun isRoundOver(round: Round, winners: Int): Boolean {
