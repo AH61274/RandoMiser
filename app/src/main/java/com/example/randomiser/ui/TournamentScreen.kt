@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.randomiser.model.Animal
+import com.example.randomiser.model.Round
 import com.example.randomiser.ui.theme.RandoMiserTheme
 
 @Composable
@@ -61,9 +62,11 @@ fun AnimalCard(
 @Composable
 fun TournamentScreen(
     contenders: Pair<Animal, Animal>,
-    selectWinner: (Animal) -> Unit
+    selectWinner: (Animal) -> Unit,
+    round: Round
 ) {
     Column {
+        Text(round.name)
         AnimalCard(
             animal = contenders.first,
             selectWinner = selectWinner,
@@ -87,7 +90,8 @@ fun HacktivityScreenPreview() {
     RandoMiserTheme {
         TournamentScreen(
             Pair(Animal(), Animal()),
-            selectWinner = {}
+            selectWinner = {},
+            Round.ROUND_1,
         )
     }
 }

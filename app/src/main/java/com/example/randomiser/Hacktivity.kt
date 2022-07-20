@@ -37,7 +37,8 @@ class Hacktivity : ComponentActivity() {
         RandoMiserTheme {
             Layout(
                 contenders = contenders,
-                selectWinner = viewModel::selectWinner
+                selectWinner = viewModel::selectWinner,
+                viewModel.currentRound
             )
         }
     }

@@ -6,11 +6,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.randomiser.model.Animal
 import com.example.randomiser.model.HacktivityNavRoute
+import com.example.randomiser.model.Round
 
 @Composable
 fun Layout(
     contenders: Pair<Animal, Animal>,
-    selectWinner: (Animal) -> Unit
+    selectWinner: (Animal) -> Unit,
+    round: Round,
 ) {
     val navController = rememberNavController()
 
@@ -21,7 +23,8 @@ fun Layout(
         composable(HacktivityNavRoute.TOURNAMENT.id) {
             TournamentScreen(
                 contenders = contenders,
-                selectWinner = selectWinner
+                selectWinner = selectWinner,
+                round = round,
             )
         }
 

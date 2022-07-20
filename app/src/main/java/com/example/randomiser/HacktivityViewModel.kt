@@ -1,5 +1,6 @@
 package com.example.randomiser
 
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.randomiser.model.Animal
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 import okhttp3.*
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Qualifier
 
 @HiltViewModel
 class HacktivityViewModel @Inject constructor() : ViewModel() {
@@ -35,6 +37,8 @@ class HacktivityViewModel @Inject constructor() : ViewModel() {
     val roundWinners: StateFlow<List<Animal>> = _roundWinners
 
     internal var currentRound: Round = Round.QUALIFIERS
+
+    private var lastRoundWinners: MutableList<Animal> = mutableListOf()
 
     private val client = OkHttpClient.Builder().build()
 
@@ -154,6 +158,37 @@ class HacktivityViewModel @Inject constructor() : ViewModel() {
             newList.add(roundWinner)
             newList
         }
-        getNames()
+        if (isRoundOver(Round.QUALIFIERS, _roundWinners.value.size)) {
+            currentRound = Round.ROUND_1
+            _roundWinners.emit(emptyList())
+        } else if (isRoundOver(Round.ROUND_1, _roundWinners.value.size)) {
+            currentRound = Round.ROUND_2
+        } else if (isRoundOver(Round.ROUND_2, _roundWinners.value.size)) {
+            currentRound = Round.SEMI_FINALS
+        } else if (isRoundOver(Round.SEMI_FINALS, _roundWinners.value.size)) {
+            currentRound = Round.FINAL
+        } else if (isRoundOver(Round.FINAL, _roundWinners.value.size)) {
+            // Restart
+        } else {
+            if (currentRound == Round.QUALIFIERS) {
+                getNames()
+            } else if (currentRound == Round.FINAL) {
+                // Something Different
+            } else {
+                val contenderA = lastRoundWinners.random()
+                lastRoundWinners.remove(contenderA)
+                val contenderB = lastRoundWinners.random()
+                lastRoundWinners.remove(contenderB)
+                _contenders.emit(Pair(contenderA, contenderB))
+            }
+        }
+    }
+
+    private fun isRoundOver(round: Round, winners: Int): Boolean {
+        val isRoundOver = winners >= round.winners && currentRound == round
+        if (isRoundOver && currentRound != Round.FINAL) {
+            lastRoundWinners = _roundWinners.value.toMutableList()
+        }
+        return isRoundOver
     }
 }
