@@ -163,10 +163,13 @@ class HacktivityViewModel @Inject constructor() : ViewModel() {
             _roundWinners.emit(emptyList())
         } else if (isRoundOver(Round.ROUND_1, _roundWinners.value.size)) {
             currentRound = Round.ROUND_2
+            _roundWinners.emit(emptyList())
         } else if (isRoundOver(Round.ROUND_2, _roundWinners.value.size)) {
             currentRound = Round.SEMI_FINALS
+            _roundWinners.emit(emptyList())
         } else if (isRoundOver(Round.SEMI_FINALS, _roundWinners.value.size)) {
             currentRound = Round.FINAL
+            _roundWinners.emit(emptyList())
         } else if (isRoundOver(Round.FINAL, _roundWinners.value.size)) {
             // Restart
         } else {
