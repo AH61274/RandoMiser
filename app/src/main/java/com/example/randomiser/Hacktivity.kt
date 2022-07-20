@@ -32,13 +32,11 @@ class Hacktivity : ComponentActivity() {
     @Composable
     @Preview(showBackground = true)
     fun App() {
-        val cat by viewModel.cat.collectAsState()
-        val dog by viewModel.dog.collectAsState()
+        val contenders by viewModel.contenders.collectAsState()
 
         RandoMiserTheme {
             Layout(
-                cat = cat,
-                dog = dog,
+                contenders = contenders,
                 selectWinner = viewModel::selectWinner
             )
         }

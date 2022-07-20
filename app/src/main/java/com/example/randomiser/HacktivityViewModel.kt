@@ -3,6 +3,7 @@ package com.example.randomiser
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.randomiser.model.Animal
+import com.example.randomiser.model.Round
 import com.example.randomiser.model.api.CatData
 import com.example.randomiser.model.api.DogData
 import com.squareup.moshi.JsonAdapter
@@ -13,6 +14,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.getAndUpdate
 import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
 import okhttp3.*
@@ -22,11 +24,9 @@ import javax.inject.Inject
 @HiltViewModel
 class HacktivityViewModel @Inject constructor() : ViewModel() {
 
-    private val _cat: MutableStateFlow<Animal> = MutableStateFlow(Animal())
-    val cat: StateFlow<Animal> = _cat
-
-    private val _dog: MutableStateFlow<Animal> = MutableStateFlow(Animal())
-    val dog: StateFlow<Animal> = _dog
+    private val _contenders: MutableStateFlow<Pair<Animal, Animal>> =
+        MutableStateFlow(Pair(Animal(), Animal()))
+    val contenders: StateFlow<Pair<Animal, Animal>> = _contenders
 
     private val _names: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
     private val names: StateFlow<List<String>> = _names
@@ -34,11 +34,12 @@ class HacktivityViewModel @Inject constructor() : ViewModel() {
     private val _roundWinners: MutableStateFlow<List<Animal>> = MutableStateFlow(emptyList())
     val roundWinners: StateFlow<List<Animal>> = _roundWinners
 
+    internal var currentRound: Round = Round.QUALIFIERS
+
     private val client = OkHttpClient.Builder().build()
 
     fun initViewModel() {
         getNames()
-
         viewModelScope.launch {
             names.collect {
                 if (it.size == 2) {
@@ -126,21 +127,25 @@ class HacktivityViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun updateCat(cat: CatData, name: String) = viewModelScope.launch {
-        _cat.emit(
-            Animal(
-                url = cat.url,
-                name = name
+        _contenders.getAndUpdate {
+            it.copy(
+                first = Animal(
+                    url = cat.url,
+                    name = name
+                )
             )
-        )
+        }
     }
 
     private fun updateDog(dog: DogData, name: String) = viewModelScope.launch {
-        _dog.emit(
-            Animal(
-                url = dog.url,
-                name = name
+        _contenders.getAndUpdate {
+            it.copy(
+                second = Animal(
+                    url = dog.url,
+                    name = name
+                )
             )
-        )
+        }
     }
 
     internal fun selectWinner(roundWinner: Animal) = viewModelScope.launch {
