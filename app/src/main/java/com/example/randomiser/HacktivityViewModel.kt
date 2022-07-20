@@ -149,5 +149,6 @@ class HacktivityViewModel @Inject constructor() : ViewModel() {
             newList.add(roundWinner)
             newList
         }
+        getNames()
     }
 }
