@@ -1,6 +1,5 @@
 package com.example.randomiser
 
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.randomiser.model.Animal
@@ -20,8 +19,8 @@ import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
 import okhttp3.*
 import java.io.IOException
+import java.util.*
 import javax.inject.Inject
-import javax.inject.Qualifier
 
 @HiltViewModel
 class HacktivityViewModel @Inject constructor() : ViewModel() {
@@ -90,7 +89,30 @@ class HacktivityViewModel @Inject constructor() : ViewModel() {
                     val moshi = Moshi.Builder().build()
                     val dogAdapter: JsonAdapter<DogData> = moshi.adapter(DogData::class.java)
                     val dog = dogAdapter.fromJson(response.body?.string() ?: "")
-                    dog?.let { updateDog(it, name) }
+
+                    if (dog?.url?.lowercase()?.endsWith("mp4") == true) {
+
+                        // Dirty Hacky work around that I hate
+                        val request = Request.Builder()
+                            .url("https://random.dog/woof.json")
+                            .build()
+                        client.newCall(request).enqueue(object : Callback {
+                            override fun onFailure(call: Call, e: IOException) {
+                                //
+                            }
+
+                            override fun onResponse(call: Call, response: Response) {
+                                if (response.isSuccessful) {
+                                    val moshi = Moshi.Builder().build()
+                                    val dogAdapter: JsonAdapter<DogData> = moshi.adapter(DogData::class.java)
+                                    val dog = dogAdapter.fromJson(response.body?.string() ?: "")
+                                    dog?.let { updateDog(it, name) }
+                                }
+                            }
+                        })
+                    } else {
+                        dog?.let { updateDog(it, name) }
+                    }
                 }
             }
         })
