@@ -19,7 +19,6 @@ import kotlinx.coroutines.flow.updateAndGet
 import kotlinx.coroutines.launch
 import okhttp3.*
 import java.io.IOException
-import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -55,7 +54,7 @@ class HacktivityViewModel @Inject constructor() : ViewModel() {
 
     private fun getCat(name: String) = viewModelScope.launch(Dispatchers.IO) {
         val request = Request.Builder()
-            .url("https://api.thecatapi.com/v1/images/search")
+            .url("https://api.thecatapi.com/v1/images/search?mime_types=jpg,png")
             .build()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
